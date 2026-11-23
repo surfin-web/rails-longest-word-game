@@ -15,5 +15,11 @@ class GamesController < ApplicationController
     response = URI.parse(url).read
     json = JSON.parse(response)
     @english_word = json["found"]
+
+    @score = (@included && @english_word) ? @word.length : 0
+
+    session[:grand_total] ||= 0
+    session[:grand_total] += @score
+    @grand_total = session[:grand_total]
   end
 end
